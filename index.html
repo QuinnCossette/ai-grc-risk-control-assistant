@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI GRC Risk Control Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">A</div>
+          <div>
+            <p>AI GRC</p>
+            <span>Risk Control Assistant</span>
+          </div>
+        </div>
+        <nav class="nav-list" aria-label="Primary">
+          <button class="nav-item active" data-view="dashboard">Dashboard</button>
+          <button class="nav-item" data-view="risks">Risks</button>
+          <button class="nav-item" data-view="controls">Controls</button>
+          <button class="nav-item" data-view="evidence">Evidence</button>
+          <button class="nav-item" data-view="assistant">AI Review</button>
+        </nav>
+      </aside>
+
+      <main>
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Audit readiness workspace</p>
+            <h1>Map risk, controls, and evidence before audit week gets loud.</h1>
+          </div>
+          <div class="top-actions">
+            <select id="frameworkFilter" aria-label="Filter by framework">
+              <option value="all">All frameworks</option>
+              <option value="NIST CSF">NIST CSF</option>
+              <option value="SOC 2">SOC 2</option>
+              <option value="ISO 27001">ISO 27001</option>
+              <option value="CIS Controls">CIS Controls</option>
+            </select>
+            <button id="generateBrief">Generate Brief</button>
+          </div>
+        </header>
+
+        <section class="hero-panel">
+          <div class="hero-copy">
+            <span class="status-pill">Demo dataset</span>
+            <h2>Security compliance signal from scattered evidence.</h2>
+            <p>The app tracks control ownership, stale evidence, framework mapping, and AI-assisted review notes for a realistic GRC analyst workflow.</p>
+          </div>
+          <div class="radar-visual" aria-label="Control coverage visualization">
+            <div class="radar-ring ring-one"></div>
+            <div class="radar-ring ring-two"></div>
+            <div class="radar-ring ring-three"></div>
+            <div class="radar-node node-one"></div>
+            <div class="radar-node node-two"></div>
+            <div class="radar-node node-three"></div>
+            <div class="radar-node node-four"></div>
+            <div class="radar-core">78%</div>
+          </div>
+        </section>
+
+        <section id="dashboard" class="view active">
+          <div class="metric-grid" id="metrics"></div>
+          <div class="content-grid">
+            <section class="panel wide">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">Framework coverage</p>
+                  <h2>Control maturity by domain</h2>
+                </div>
+                <span id="coverageSummary"></span>
+              </div>
+              <div id="coverageChart" class="bar-chart"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">AI signal</p>
+                  <h2>Top audit concerns</h2>
+                </div>
+              </div>
+              <div id="concernList" class="stack"></div>
+            </section>
+          </div>
+        </section>
+
+        <section id="risks" class="view">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Risk register</p>
+              <h2>Prioritized security and compliance risks</h2>
+            </div>
+            <input id="riskSearch" type="search" placeholder="Search risks">
+          </div>
+          <div id="riskTable" class="table-wrap"></div>
+        </section>
+
+        <section id="controls" class="view">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Control library</p>
+              <h2>Mapped controls with ownership and maturity</h2>
+            </div>
+            <select id="domainFilter" aria-label="Filter by domain">
+              <option value="all">All domains</option>
+            </select>
+          </div>
+          <div id="controlGrid" class="card-grid"></div>
+        </section>
+
+        <section id="evidence" class="view">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Evidence tracker</p>
+              <h2>Artifacts that prove controls are operating</h2>
+            </div>
+            <button id="markStale">Show stale only</button>
+          </div>
+          <div id="evidenceList" class="stack"></div>
+        </section>
+
+        <section id="assistant" class="view">
+          <div class="assistant-layout">
+            <section class="panel">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">AI review</p>
+                  <h2>Evidence summary</h2>
+                </div>
+              </div>
+              <textarea id="evidenceInput">Quarterly access review completed for privileged users. Three terminated users were removed after HR notification. One contractor account remained active for 12 days after project close.</textarea>
+              <button id="analyzeText">Analyze Evidence</button>
+              <div id="assistantOutput" class="assistant-output"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">Generated brief</p>
+                  <h2>Audit-ready snapshot</h2>
+                </div>
+              </div>
+              <div id="briefOutput" class="brief"></div>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
