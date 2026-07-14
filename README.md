@@ -1,14 +1,14 @@
 # SOC 2 Review Lab
 
-This is a small student project for doing a first pass on one vendor SOC 2 report at a time. It helps turn a long report into a simple checklist, but it does not make the final risk call for you.
+This is a small student project I built to help with reviewing SOC 2 reports. The goal is to make the first pass of a vendor review a little faster by pulling out important information and matching it to a checklist. It is meant to help organize the review, not make the final risk decision.
 
-Open [index.html](index.html) in a modern browser. The app uses PDF.js from cdnjs to read PDFs, so you need an internet connection for PDF uploads. The report is read in your browser and is not sent to an app server.
+To use it, just open [index.html](index.html) in a modern browser. The app uses PDF.js from cdnjs to read searchable PDF files, so you'll need an internet connection when uploading a report. Everything is processed in your browser, so the report is not uploaded to a server.
 
 ## What It Checks
 
 - Searchable SOC 2 PDFs or pasted report text.
 - Page-by-page text and the report excerpt behind each match.
-- The 123-row vendor-risk checklist included in this project.
+- A 123-row vendor-risk checklist.
 - Whether a checklist item has evidence, needs a closer look, was not found, does not apply, or needs a manual check.
 - The main SOC 2 details: report type, dates, opinion, exceptions, CUECs, subservice providers, and carve-outs.
 - Extra prompts for FERPA, HIPAA/PHI, PCI, GLBA, research/CUI, and critical or SSO services.
@@ -23,8 +23,8 @@ Open [index.html](index.html) in a modern browser. The app uses PDF.js from cdnj
 5. Use **Evidence** to track anything you still need to ask the vendor for.
 6. Download the CSV and make the final risk decision in your normal process.
 
-## A Quick Heads-Up
+## Some Notes
 
-This tool is a first pass, not an automatic approval tool. SOC 2 reports are written in lots of different ways, so a keyword match does not prove a control works or even applies. Always check the opinion, scope, dates, exceptions, CUECs, subservice providers, data flow, and contract needs in the original report.
+This tool is only meant to help with the initial review. It doesn't automatically decide whether a vendor passes or fails. Since every SOC 2 report is written a little differently, you should still read the report yourself and verify things like the audit opinion, scope, dates, exceptions, CUECs, subservice providers, and any other important details.
 
 Image-only PDFs need OCR before the tool can read them. The TestInc PDF in `TESTING` is made up and is only there for testing.
