@@ -27,4 +27,4 @@ Open [index.html](index.html) in a modern browser. The app uses PDF.js from cdnj
 
 This tool is a first pass, not an automatic approval tool. SOC 2 reports are written in lots of different ways, so a keyword match does not prove a control works or even applies. Always check the opinion, scope, dates, exceptions, CUECs, subservice providers, data flow, and contract needs in the original report.
 
-Image-only PDFs need OCR before the tool can read them. The TestInc PDF in the parent `TESTING` folder is made up and is only there for testing.
+Image-only PDFs need OCR before the tool can read them. The TestInc PDF in `TESTING` is made up and is only there for testing.
