@@ -9,7 +9,7 @@ To use it, just open [index.html](index.html) in a modern browser. The app uses 
 - Searchable SOC 2 PDFs or pasted report text.
 - Page-by-page text and the report excerpt behind each match.
 - A 123-row vendor-risk checklist.
-- Whether a checklist item has evidence, needs a closer look, was not found, does not apply, or needs a manual check.
+- Whether a checklist item has a keyword match, needs a closer look, was not found, does not apply, or needs a manual check. A match is not proof that a control is effective.
 - The main SOC 2 details: report type, dates, opinion, exceptions, CUECs, subservice providers, and carve-outs.
 - Extra prompts for FERPA, HIPAA/PHI, PCI, GLBA, research/CUI, and critical or SSO services.
 - A short summary, follow-up list, and CSV download with the scan results.
@@ -25,6 +25,6 @@ To use it, just open [index.html](index.html) in a modern browser. The app uses 
 
 ## Some Notes
 
-This tool is only meant to help with the initial review. It doesn't automatically decide whether a vendor passes or fails. Since every SOC 2 report is written a little differently, you should still read the report yourself and verify things like the audit opinion, scope, dates, exceptions, CUECs, subservice providers, and any other important details.
+This tool is only meant to help with the initial review. It doesn't automatically decide whether a vendor passes or fails. Checklist results are keyword matches, not control testing or proof of effectiveness. Since every SOC 2 report is written a little differently, read the report yourself and verify the auditor's opinion, scope, dates, exceptions, CUECs, subservice providers, and any other important details. Search misses are not proof that a control or document is absent.
 
 Image-only PDFs need OCR before the tool can read them. The TestInc PDF in `TESTING` is made up and is only there for testing.
