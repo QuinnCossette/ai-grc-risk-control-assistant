@@ -413,9 +413,9 @@ function evaluateChecklistItem(entry, pages, context) {
   }
 
   return Object.assign({}, entry, {
-    status: 'Satisfactory',
-    score: 'Evidence found',
-    analysis: evidenceSummary(evidence),
+    status: 'Match found',
+    score: 'Keyword match only',
+    analysis: 'The scan found related wording, but this does not show that the control is designed well or operated effectively. ' + evidenceSummary(evidence),
     evidence: evidence,
     matchedTerms: unique(evidence.map(function (item) { return item.term; }))
   });
@@ -710,7 +710,7 @@ function checklistStats() {
   const scorable = state.checklistResults.filter(function (item) {
     return !['Manual', 'Not applicable'].includes(item.status);
   });
-  const satisfactory = scorable.filter(function (item) { return item.status === 'Satisfactory'; }).length;
+  const satisfactory = scorable.filter(function (item) { return item.status === 'Match found'; }).length;
   const review = state.checklistResults.filter(function (item) { return item.status === 'Needs review'; }).length;
   const missing = state.checklistResults.filter(function (item) { return item.status === 'Not found'; }).length;
   const coverage = scorable.length ? Math.round((satisfactory / scorable.length) * 100) : 0;
@@ -798,7 +798,7 @@ function renderCoverage() {
       return groups;
     }
     groups[item.domain] = groups[item.domain] || [];
-    groups[item.domain].push(item.status === 'Satisfactory' ? 100 : item.status === 'Needs review' ? 50 : 0);
+    groups[item.domain].push(item.status === 'Match found' ? 100 : item.status === 'Needs review' ? 50 : 0);
     return groups;
   }, {});
   const scores = Object.keys(grouped).map(function (domain) {
@@ -806,7 +806,7 @@ function renderCoverage() {
     return { domain: domain, score: Math.round(values.reduce(function (total, value) { return total + value; }, 0) / values.length) };
   });
   const average = scores.length ? Math.round(scores.reduce(function (total, item) { return total + item.score; }, 0) / scores.length) : 0;
-  elements.coverageSummary.textContent = average + '% checklist matches';
+  elements.coverageSummary.textContent = average + '% keyword matches';
   elements.coverageChart.innerHTML = scores.length ? scores.map(function (item) {
     return '<div class="bar-row"><strong>' + escapeHtml(displayText(item.domain)) + '</strong><div class="bar-track"><div class="bar-fill" style="width: ' + item.score + '%"></div></div><span>' + item.score + '%</span></div>';
   }).join('') : '<div class="empty-state"><strong>No checklist items to score</strong><p>Check the options you selected before reading this score.</p></div>';
@@ -1046,6 +1046,12 @@ async function handleReportUpload(event) {
   if (!file) {
     return;
   }
+  // A failed replacement upload must not leave the previous report's results visible.
+  const priorContext = selectedContext();
+  clearScan();
+  document.querySelectorAll('input[name="reviewContext"]').forEach(function (input) {
+    input.checked = priorContext.has(input.value);
+  });
   elements.fileStatus.textContent = 'Reading ' + file.name + '...';
   elements.analyzeText.disabled = true;
   try {
@@ -1057,7 +1063,11 @@ async function handleReportUpload(event) {
     elements.evidenceInput.value = extracted.text.trim();
     scanReport();
   } catch (error) {
-    state.pages = [];
+    const uploadContext = selectedContext();
+    clearScan();
+    document.querySelectorAll('input[name="reviewContext"]').forEach(function (input) {
+      input.checked = uploadContext.has(input.value);
+    });
     elements.fileStatus.textContent = error.message;
     elements.assistantOutput.innerHTML = '<div class="idle-card"><strong>Report not scanned</strong><p>' + escapeHtml(error.message) + '</p></div>';
   } finally {
@@ -1066,7 +1076,11 @@ async function handleReportUpload(event) {
 }
 
 function csvCell(value) {
-  return '"' + String(value === undefined || value === null ? '' : value).replace(/"/g, '""').replace(/\r?\n/g, ' ') + '"';
+  let text = String(value === undefined || value === null ? '' : value).replace(/\r?\n/g, ' ');
+  if (/^[\s\u0000-\u001f]*[=+\-@]/.test(text)) {
+    text = "'" + text;
+  }
+  return '"' + text.replace(/"/g, '""') + '"';
 }
 
 function downloadWorkpaper() {
